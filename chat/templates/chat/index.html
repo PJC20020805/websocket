@@ -1,27 +1,84 @@
-<!-- chat/templates/chat/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <meta charset="utf-8">
+    <title>聊天房间</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- 引入自定义CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'chat/css/chat_index.css' %}">
+
+    <!-- Tailwind配置（如需自定义主题，建议放这里） -->
     <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.key === 'Enter') {  // enter, return
-                document.querySelector('#room-name-submit').click();
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4FB3F5', // 浅蓝色主色调
+                    },
+                }
             }
-        };
-
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
+        }
     </script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 font-sans">
+    <!-- 卡片容器 -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+        <!-- 标题区域 -->
+        <div class="text-center mb-8">
+            <i class="fa fa-comments text-primary text-4xl mb-3"></i>
+            <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-gray-800 text-shadow">
+                聊天房间
+            </h1>
+            <p class="text-gray-500 mt-2">输入房间名称进入聊天室</p>
+        </div>
+
+        <!-- 表单区域 -->
+        <form id="room-form" class="space-y-5">
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-500">
+                    <i class="fa fa-hashtag"></i>
+                </span>
+                <input
+                    id="room-name-input"
+                    type="text"
+                    placeholder="请输入房间名称"
+                    class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all-300 text-gray-800"
+                    required
+                >
+                <div class="absolute inset-y-0 right-0 flex items-center pr-4">
+                    <i id="room-input-icon" class="fa fa-circle-o text-gray-300"></i>
+                </div>
+            </div>
+
+            <!-- 确认按钮 -->
+            <button
+                id="room-name-submit"
+                type="submit"
+                class="w-full py-4 px-6 bg-primary hover:bg-primary/90 text-white font-medium rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all-300 transform hover:-translate-y-1 flex items-center justify-center"
+            >
+                <span>进入房间</span>
+                <i class="fa fa-arrow-right ml-2"></i>
+            </button>
+        </form>
+
+        <!-- 装饰元素 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+            <p class="text-sm text-gray-400">
+                <i class="fa fa-info-circle mr-1"></i> 房间名称支持字母、数字和下划线
+            </p>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="mt-8 text-center text-gray-400 text-sm">
+        <p>© 2025 聊天应用 | 使用 <span class="text-primary">❤</span> 开发</p>
+    </footer>
+
+    <!-- 引入自定义JS -->
+    <script src="{% static 'chat/js/chat_index.js' %}"></script>
 </body>
 </html>
